@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Where(clause = "deleted = false")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,5 +33,7 @@ public class Product {
     private int quantity;
 
     private long category;
+
+    private boolean deleted = false;
 
 }

@@ -6,9 +6,7 @@ import lombok.Data;
 public class ProductRequestDto {
     private String name;
     private String description;
-    private double price;
-    private int quantity;
-    private long category;
-
-
+    private Double price;
+    private Integer quantity;
+    private Long category;
 }
