@@ -2,12 +2,16 @@ package com.inventory.management.system.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Category {
 
     @Id
@@ -23,9 +27,10 @@ public class Category {
     public LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    @CreationTimestamp
+    @UpdateTimestamp
     public LocalDateTime updatedAt;
 
     public String name;
     public String description;
+
 }

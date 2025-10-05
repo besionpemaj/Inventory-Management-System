@@ -32,7 +32,9 @@ public class Product {
 
     private int quantity;
 
-    private long category;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     private boolean deleted = false;
 

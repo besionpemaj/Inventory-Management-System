@@ -19,5 +19,5 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     Page<Product> findByCategory(Category category, Pageable pageable);
 
-    List<Product> findAllByDeletedFalse();
+    List<Product> findByQuantityLessThan(int quantity);
 }

@@ -13,21 +13,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("api/product")
 public class ProductController {
 
-
-    private ProductService productService;
-    private ProductRepository productRepository;
-
     @Autowired
-    public ProductController(ProductRepository productRepository, ProductService productService) {
-        this.productRepository = productRepository;
-        this.productService = productService;
-    }
+    private ProductService productService;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -40,15 +34,13 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") Long id) {
-        Optional<Product> product = productRepository.findById(id);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping("name/{name}")
     public ResponseEntity<Optional<Product>> getProductByName(@PathVariable("name") String name) {
-        Optional<Product> product = productRepository.findByName(name);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(productService.getProductByName(name), HttpStatus.OK);
     }
 
     @GetMapping
@@ -70,6 +62,11 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
         productService.softDeleteProduct(id);
-        return ResponseEntity.ok("Deleted the product.");
+        return ResponseEntity.ok("Deleted the product");
+    }
+    @GetMapping("/low_quantity")
+    public ResponseEntity<List<ProductResponseDto>> low_quantity_detector(@RequestParam(name = "quantity") int quantity){
+        List<ProductResponseDto> productResponseDtos = productService.getLowCost(quantity);
+        return new ResponseEntity<>(productResponseDtos,HttpStatus.OK);
     }
 }
