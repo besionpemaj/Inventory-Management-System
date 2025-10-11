@@ -1,5 +1,6 @@
 package com.inventory.management.system.Entity;
 
+import com.inventory.management.system.Enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,13 +21,16 @@ public class Order {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private Long customerId;
+    private int customerId;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
     private int quantity;
 
     private double total;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status = OrderStatus.NEW;
 
 }
